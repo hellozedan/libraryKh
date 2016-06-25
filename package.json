@@ -1,0 +1,29 @@
+{
+  "name": "bts",
+  "version": "1.0.0",
+  "description": "Been There Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zedany7/library.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zedany7/library/issues"
+  },
+  "homepage": "https://github.com/zedany7/library#readme",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "crypto": "^0.0.3",
+    "express": "^4.13.3",
+    "fb": "^0.7.3",
+    "moment": "^2.10.6",
+    "mongoose": "^4.2.4",
+    "node-geocoder": "^2.23.0",
+    "step": "0.0.6"
+  }
+}
