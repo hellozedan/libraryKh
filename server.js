@@ -20,11 +20,19 @@ var cors = require('cors');
 var port = process.env.PORT || 5000;
 
 
+
 app.set('superSecret', 'beenthere');
 
 //configure the app to use body parsers
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+//app.use(cors());
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 //var corsOptions = {
 //  credentials: true,
@@ -46,12 +54,12 @@ var bookRouter = require("./routes/bookRoutes")(Book);
 var messageRouter = require("./routes/messageRoutes")(Message);
 
 
-app.use(function(req, res, next){
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', '*');
-    next();
-});
+//app.use(function(req, res, next){
+//    res.setHeader('Access-Control-Allow-Origin', '*');
+//    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//    res.setHeader('Access-Control-Allow-Headers', '*');
+//    next();
+//});
 
 
 
