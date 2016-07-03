@@ -13,6 +13,8 @@ var db = mongoose.connect('mongodb://user:admin@ds023674.mlab.com:23674/librarym
 var User = require('./models/user');
 var Usertrack = require('./models/usertrack');
 var Book = require('./models/book');
+var Event = require('./models/event');
+
 var Message = require('./models/message');
 
 var app = express();
@@ -51,6 +53,8 @@ app.use(function(req, res, next) {
 var userRouter = require("./routes/userRoutes")(User);
 var usertrackRouter = require("./routes/usertrackRoutes")(Usertrack);
 var bookRouter = require("./routes/bookRoutes")(Book);
+var eventRouter = require("./routes/eventRoutes")(Event);
+
 var messageRouter = require("./routes/messageRoutes")(Message);
 
 
@@ -66,6 +70,8 @@ var messageRouter = require("./routes/messageRoutes")(Message);
 app.use('/api/users', userRouter);
 app.use('/api/usertracks', usertrackRouter);
 app.use('/api/book', bookRouter);
+app.use('/api/event', eventRouter);
+
 app.use('/api/messages', messageRouter);
 
 
