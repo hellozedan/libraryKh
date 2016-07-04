@@ -35,7 +35,7 @@ var personModel = new Schema({
 	},
 	"isAdmin": {
 		type: String,
-		description: "isAdmin of the person"
+		description: "isAdmin of the personn"
 	}
 
 
