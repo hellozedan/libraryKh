@@ -14,6 +14,12 @@ var User = require('./models/user');
 var Usertrack = require('./models/usertrack');
 var Book = require('./models/book');
 var Event = require('./models/event');
+var Person = require('./models/person');
+var Author = require('./models/author');
+var Category = require('./models/category');
+var Language = require('./models/language');
+var Room = require('./models/room');
+var BookOrdering = require('./models/bookOrdering');
 
 var Message = require('./models/message');
 
@@ -54,6 +60,12 @@ var userRouter = require("./routes/userRoutes")(User);
 var usertrackRouter = require("./routes/usertrackRoutes")(Usertrack);
 var bookRouter = require("./routes/bookRoutes")(Book);
 var eventRouter = require("./routes/eventRoutes")(Event);
+var personRouter = require("./routes/personRoutes")(Person);
+var authorRoutes = require("./routes/authorRoutes")(Author);
+var categoryRoutes = require("./routes/categoryRoutes")(Category);
+var languageRoutes = require("./routes/languageRoutes")(Language);
+var RoomRoutes = require("./routes/roomRoutes")(Room);
+var bookOrderingRouter = require("./routes/bookOrderingRoutes")(BookOrdering);
 
 var messageRouter = require("./routes/messageRoutes")(Message);
 
@@ -71,6 +83,12 @@ app.use('/api/users', userRouter);
 app.use('/api/usertracks', usertrackRouter);
 app.use('/api/book', bookRouter);
 app.use('/api/event', eventRouter);
+app.use('/api/person', personRouter);
+app.use('/api/author', authorRoutes);
+app.use('/api/category', categoryRoutes);
+app.use('/api/language', languageRoutes);
+app.use('/api/room', RoomRoutes);
+app.use('/api/book', bookOrderingRouter);
 
 app.use('/api/messages', messageRouter);
 
