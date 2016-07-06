@@ -31,7 +31,7 @@ var personModel = new Schema({
 	},
 	"birthday": {
 		type: String,
-		description: "birthday of the person"
+		description: "birthday  a of the person"
 	},
 
 	"password": {
