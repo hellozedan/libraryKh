@@ -29,7 +29,7 @@ var personModel = new Schema({
 		type: String,
 		description: "address of the person"
 	},
-	"birthdayy": {
+	"birthday": {
 		type: String,
 		description: "birthday  a of the person"
 	},
