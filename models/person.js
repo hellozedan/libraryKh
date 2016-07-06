@@ -33,6 +33,11 @@ var personModel = new Schema({
 		type: String,
 		description: "birthday of the person"
 	},
+
+	"password": {
+	type: String,
+		description: "password of the person"
+},
 	"isAdmin": {
 		type: String,
 		description: "isAdmin of the personn"
