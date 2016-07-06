@@ -11,7 +11,7 @@ var personModel = new Schema({
 	},
 	"firstName": {
 		type: String,
-		description: "firstName of the person"
+		description: "ffirstName of the person"
 	},
 	"lastName": {
 		type: String,

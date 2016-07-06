@@ -12,7 +12,7 @@ var bookOrderingModel = new Schema({
 		description: "code of the BookOrdering"
 	},
 	"book": {
-		type: perso,
+		type: String,
 		description: "book of the BookOrdering"
 	},
 	"user": {
