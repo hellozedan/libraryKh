@@ -13,15 +13,24 @@ var personController = function (Person) {
     var post = function (req, res) {
         var newPerson = req.body;
         var person = new Person(newPerson);
-        person.save(function (e) {
-            if (e) {
-                console.log('error: ' + e);
-                res.status(500).send(err);
-            } else {
-                console.log('no error');
-                res.status(201).send(person);
-            }
-        });
+        var editPerson;
+
+        if(person._id) {
+            person.save(function (e) {
+                if (e) {
+                    console.log('error: ' + e);
+                    res.status(500).send(err);
+                } else {
+                    console.log('no error');
+                    res.status(201).send(person);
+                }
+            });
+        }
+        else{
+         //   newPerson.findById(person._id);
+            newPerson.findByIdAndUpdate(person._id,person);
+
+        }
     }
     var get = function (req, res) {
         var query = {};
