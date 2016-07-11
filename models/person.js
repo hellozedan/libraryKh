@@ -46,5 +46,27 @@ var personModel = new Schema({
 
 });
 
+/*personModel.pre('save',function(next){
+
+	var user = this;
+	if (this.isModified('password') || this.isNew) {
+		bcrypt.genSalt(10, function (err, salt) {
+			if (err) {
+				return next(err);
+			}
+			bcrypt.hash(user.password, salt, function (err, hash) {
+				if (err) {
+					return next(err);
+				}
+				user.password = hash;
+				next();
+			});
+		});
+	} else {
+		return next();
+	}
+
+});*/
+
 //this will expose the the "bookModel" we defined above under the name "Book" to other JS files to use it under node.js
 module.exports = mongoose.model('Person', personModel);

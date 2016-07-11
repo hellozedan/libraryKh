@@ -13,7 +13,8 @@ var routes = function(Person) {
 
     personRouter.route('/')
         .post(personController.post)
-        .get(personController.get);
+        .get(personController.get)
+            .delete(personController.deleteIt);
 
     return personRouter;
 };

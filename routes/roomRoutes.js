@@ -13,8 +13,8 @@ var routes = function(Room) {
 
     roomRouter.route('/')
         .post(roomController.post)
-        .get(roomController.get);
-
+        .get(roomController.get)
+        .delete(roomController.deleteIt);
     return roomRouter;
 };
 

@@ -13,7 +13,8 @@ var routes = function(Event) {
 
     eventRouter.route('/')
         .post(eventController.post)
-        .get(eventController.get);
+        .get(eventController.get)
+        .delete(eventController.deleteIt);
 
     return eventRouter;
 };

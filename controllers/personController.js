@@ -15,7 +15,9 @@ var personController = function (Person) {
         var person = new Person(newPerson);
         var editPerson;
 
-        if(person._id) {
+
+
+        if(!newPerson._id) {
             person.save(function (e) {
                 if (e) {
                     console.log('error: ' + e);
@@ -27,11 +29,23 @@ var personController = function (Person) {
             });
         }
         else{
-         //   newPerson.findById(person._id);
-            newPerson.findByIdAndUpdate(person._id,person);
+
+        //   Person.update(person._id,person);
+
+
+            editPerson=Person.find({_id:newPerson._id});
+            editPerson.update(newPerson,function (e) {
+                if (e) {
+                    console.log('error: ' + e);
+                    res.status(500).send(err);
+                } else {
+                    console.log('no error');
+                    res.status(201).send(newPerson);
+                }
+            });
 
         }
-    }
+    };
     var get = function (req, res) {
         var query = {};
 
@@ -44,12 +58,36 @@ var personController = function (Person) {
             }
         });
 
-    }
+    };
+
+    var deleteIt = function (req, res) {
+
+        var idForDelete = req.headers['person_id'];
+       // var person = new Person(newPerson);
+        var deletePerson;
+
+        deletePerson={_id:idForDelete};
+
+
+        Person.remove(deletePerson,function (e) {
+            if (e) {
+                console.log('error: ' + e);
+                res.status(500).send(err);
+            } else {
+                console.log('no error');
+                res.status(201).send("deleted");
+            }
+        })};
+
+
 
 
     return {
+
         post: post,
-        get: get
+        get: get,
+        deleteIt:deleteIt
+
     };
 
 };

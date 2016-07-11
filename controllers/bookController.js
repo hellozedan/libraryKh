@@ -13,15 +13,35 @@ var bookController = function (Book) {
     var post = function (req, res) {
         var newBook = req.body;
         var book = new Book(newBook);
-        book.save(function (e) {
-            if (e) {
-                console.log('error: ' + e);
-                res.status(500).send(err);
-            } else {
-                console.log('no error');
-                res.status(201).send(book);
-            }
-        });
+        var editBook;
+
+
+        if(newBook._id) {
+            editBook=Book.find({_id:book._id});
+            editBook.update(book,function (e) {
+                if (e) {
+                    console.log('error: ' + e);
+                    res.status(500).send(err);
+                } else {
+                    console.log('no error');
+                    res.status(201).send(book);
+                }
+            });
+        }
+
+        else{
+            book.save(function (e) {
+                if (e) {
+                    console.log('error: ' + e);
+                    res.status(400).send(err);
+                } else {
+                    console.log('no error');
+                    res.status(201).send(book);
+                }
+            });
+
+        }
+
     }
     var get = function (req, res) {
         var query = {};
@@ -38,9 +58,28 @@ var bookController = function (Book) {
     }
 
 
+    var deleteIt = function (req, res) {
+
+        var idForDelete = req.headers['book_id'];
+        var deleteBook;
+
+        deleteBook={_id:idForDelete};
+
+
+        Book.remove(deleteBook,function (e) {
+            if (e) {
+                console.log('error: ' + e);
+                res.status(500).send(err);
+            } else {
+                console.log('no error');
+                res.status(201).send("deleted");
+            }
+        })};
+
     return {
         post: post,
-        get: get
+        get: get,
+        deleteIt:deleteIt
     };
 
 };

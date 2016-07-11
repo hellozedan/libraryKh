@@ -13,16 +13,49 @@ var roomController = function (Room) {
     var post = function (req, res) {
         var newRoom = req.body;
         var room = new Room(newRoom);
-        room.save(function (e) {
-            if (e) {
-                console.log('error: ' + e);
-                res.status(500).send(err);
-            } else {
-                console.log('no error');
-                res.status(201).send(room);
-            }
-        });
+        var editRoom;
+
+
+        if(!newRoom._id) {
+
+            room.save(function (e) {
+                if (e) {
+                    console.log('error: ' + e);
+                    res.status(500).send(err);
+                } else {
+                    console.log('no error');
+                    res.status(201).send(room);
+                }
+            });
+
+        }
+        else{
+
+            editRoom=Room.find({_id:newRoom._id});
+            editRoom.update(newRoom,function (e) {
+                if (e) {
+                    console.log('error: ' + e);
+                    res.status(500).send(err);
+                } else {
+                    console.log('no error');
+                    res.status(201).send(newRoom);
+                }
+            });
+        }
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
     var get = function (req, res) {
         var query = {};
 
@@ -38,9 +71,28 @@ var roomController = function (Room) {
     }
 
 
+    var deleteIt = function (req, res) {
+
+        var idForDelete = req.headers['room_id'];
+        var deleteRoom;
+
+        deleteRoom={_id:idForDelete};
+
+
+        Room.remove(deleteRoom,function (e) {
+            if (e) {
+                console.log('error: ' + e);
+                res.status(500).send(err);
+            } else {
+                console.log('no error');
+                res.status(201).send("deleted");
+            }
+        })};
+
     return {
         post: post,
-        get: get
+        get: get,
+        deleteIt:deleteIt
     };
 
 };

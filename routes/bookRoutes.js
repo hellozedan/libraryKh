@@ -13,7 +13,8 @@ var routes = function(Book) {
 
     bookRouter.route('/')
         .post(bookController.post)
-        .get(bookController.get);
+        .get(bookController.get)
+        .delete(bookController.deleteIt);
 
     return bookRouter;
 };
