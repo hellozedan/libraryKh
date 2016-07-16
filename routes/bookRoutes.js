@@ -11,6 +11,8 @@ var routes = function(Book) {
 
     var bookController = require("../controllers/bookController")(Book);
 
+    bookRouter.route('/search/')
+        .post(bookController.get);
     bookRouter.route('/')
         .post(bookController.post)
         .get(bookController.get)

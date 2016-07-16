@@ -51,16 +51,33 @@ var bookController = function (Book) {
 
 
     var get = function (req, res) {
-        var query = {};
 
-        Book.find(query).sort({'_id': 'descending'}).exec(query, function (err, books) {
-            if (err) {
-                console.log(err);
-                res.status(500).send(err);
-            } else {
-                res.status(200).send(books);
-            }
-        });
+
+        var query = {};
+if(!req.body) {
+    Book.find(query).sort({'_id': 'descending'}).exec(query, function (err, books) {
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        } else {
+            res.status(200).send(books);
+        }
+    });
+}
+        else
+{
+    if(req.body.author) {
+        query.author = new RegExp(req.body.author, "i");//{ $regex: req.body.author, $options: "i };
+    }
+    Book.find(query).sort({'_id': 'descending'}).exec(query, function (err, books) {
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        } else {
+            res.status(200).send(books);
+        }
+    });
+}
 
     }
 
