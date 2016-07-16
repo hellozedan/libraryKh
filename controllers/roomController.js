@@ -59,7 +59,7 @@ var roomController = function (Room) {
     var get = function (req, res) {
         var query = {};
 
-        Room.find(query, function (err, rooms) {
+        Room.find(query).sort({'_id': 'descending'}).exec(query, function (err, rooms) {
             if (err) {
                 console.log(err);
                 res.status(500).send(err);

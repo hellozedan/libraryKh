@@ -13,7 +13,9 @@ var routes = function(Author) {
 
     authorRouter.route('/')
         .post(authorController.post)
-        .get(authorController.get);
+        .get(authorController.get)
+        .delete(authorController.deleteIt);
+    ;
 
     return authorRouter;
 };

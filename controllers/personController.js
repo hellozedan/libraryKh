@@ -49,7 +49,7 @@ var personController = function (Person) {
     var get = function (req, res) {
         var query = {};
 
-        Person.find(query, function (err, persons) {
+        Person.find(query).sort({'_id': 'descending'}).exec(query, function (err, persons) {
             if (err) {
                 console.log(err);
                 res.status(500).send(err);

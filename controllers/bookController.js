@@ -43,10 +43,17 @@ var bookController = function (Book) {
         }
 
     }
+
+
+
+
+
+
+
     var get = function (req, res) {
         var query = {};
 
-        Book.find(query, function (err, books) {
+        Book.find(query).sort({'_id': 'descending'}).exec(query, function (err, books) {
             if (err) {
                 console.log(err);
                 res.status(500).send(err);
