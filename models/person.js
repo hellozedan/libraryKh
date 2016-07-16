@@ -42,7 +42,7 @@ var personModel = new Schema({
 		type: String,
 		description: "isAdmin of the personn"
 	}
-
+//
 
 });
 
