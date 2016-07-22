@@ -7,9 +7,9 @@ var express = require('express');
 
 
 var routes = function(Category) {
-    debugger
+
     var categoryRouter = express.Router();
-    debugger
+
     var categoryController = require("../controllers/categoryController")(Category);
 
     categoryRouter.route('/')

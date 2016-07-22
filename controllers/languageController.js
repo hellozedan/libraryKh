@@ -9,7 +9,7 @@ var Utils = require('../utils/utils.js');
 var Language = require('../models/language.js');
 
 var languageController = function (Language) {
-    debugger
+
 
     var post = function (req, res) {
         var newLanguage = req.body;
@@ -17,7 +17,7 @@ var languageController = function (Language) {
         var editLanguage;
 
 
-debugger
+
         if(newLanguage._id) {
             editLanguage=Language.find({_id:language._id});
             editLanguage.update(language,function (e) {
@@ -32,7 +32,7 @@ debugger
         }
         else
         {
-            debugger
+
 
             language.save(function (e) {
                 if (e) {

@@ -12,10 +12,11 @@ var categoryController = function (Category) {
 
     var post = function (req, res) {
         var newCategory = req.body;
-        var category = new Category(neCategory);
+        var category = new Category(newCategory);
         var editCategory;
 
         if(newCategory._id) {
+            
             editCategory=Category.find({_id:category._id});
             editCategory.update(category,function (e) {
                 if (e) {
