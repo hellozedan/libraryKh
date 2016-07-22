@@ -13,7 +13,8 @@ var routes = function(Language) {
 
     languageRouter.route('/')
         .post(languageController.post)
-        .get(languageController.get);
+        .get(languageController.get)
+        .delete(languageController.deleteIt);
 
     return languageRouter;
 };
