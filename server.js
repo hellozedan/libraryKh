@@ -27,7 +27,7 @@ var app = express();
 var cors = require('cors');
 var port = process.env.PORT || 5000;
 
-
+debugger
 
 app.set('superSecret', 'beenthere');
 

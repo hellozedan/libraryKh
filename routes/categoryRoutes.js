@@ -6,10 +6,11 @@
 var express = require('express');
 
 
-var routes = function(Book) {
+var routes = function(Category) {
+    debugger
     var categoryRouter = express.Router();
-
-    var categoryController = require("../controllers/categoryController")(Book);
+    debugger
+    var categoryController = require("../controllers/categoryController")(Category);
 
     categoryRouter.route('/')
         .post(categoryController.post)
