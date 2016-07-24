@@ -9,7 +9,6 @@ var userController = function (User) {
 
     var post = function (req, res) {
         var newUser;
-        var token = require('crypto').randomBytes(64).toString('hex');
         if (req.body.type === "guest") {
             newUser = {};
 

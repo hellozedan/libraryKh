@@ -66,9 +66,29 @@ if(!req.body) {
 }
         else
 {
-    if(req.body.author) {
-        query.author = new RegExp(req.body.author, "i");//{ $regex: req.body.author, $options: "i };
+
+
+
+    if(req.body.title) {
+        query.title = new RegExp(req.body.title, "i");
     }
+
+    if(req.body.author) {
+        query.author = new RegExp(req.body.author, "i");
+    }
+    if(req.body.language) {
+        query.language = new RegExp(req.body.language, "i");
+    }
+    if(req.body.category) {
+        query.category = new RegExp(req.body.category, "i");
+    }
+    if(req.body.author) {
+        query.author = new RegExp(req.body.author, "i");
+    }
+
+
+
+
     Book.find(query).sort({'_id': 'descending'}).exec(query, function (err, books) {
         if (err) {
             console.log(err);

@@ -12,12 +12,17 @@ var personController = function (Person) {
 
     var post = function (req, res) {
         var newPerson = req.body;
+        if(!newPerson._id) {
+            var token = require('crypto').randomBytes(64).toString('hex');
+            newPerson.token=token;
+        }
         var person = new Person(newPerson);
         var editPerson;
 
 
 
         if(!newPerson._id) {
+
             person.save(function (e) {
                 if (e) {
                     console.log('error: ' + e);
@@ -49,14 +54,49 @@ var personController = function (Person) {
     var get = function (req, res) {
         var query = {};
 
-        Person.find(query).sort({'_id': 'descending'}).exec(query, function (err, persons) {
-            if (err) {
-                console.log(err);
-                res.status(500).send(err);
-            } else {
-                res.status(200).send(persons);
+
+        if(req.method==="GET") {
+            Person.find(query).sort({'_id': 'descending'}).exec(query, function (err, persons) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send(err);
+                } else {
+                    res.status(200).send(persons);
+                }
+            });
+        }
+
+        else
+        {
+
+
+            if(req.body.Username) {
+                query.id = new RegExp(req.body.Username, "i");
             }
-        });
+
+            Person.findOne(query).sort({'_id': 'descending'}).exec(query, function (err, personFound) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send(err);
+                } else {
+
+
+
+               if(personFound==null){
+             res.status(500).send("Invalid ID");
+
+            }
+                   if(personFound.password==req.body.Password) {
+
+                       res.status(200).send(personFound);
+                   }
+                    else{
+                       res.status(500).send("Invalid Password");
+                   }
+                }
+            });
+
+        }
 
     };
 

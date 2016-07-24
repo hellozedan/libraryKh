@@ -33,13 +33,14 @@ var personModel = new Schema({
 		type: String,
 		description: "birthday  a of the person"
 	},
+	"token":{type:String},
 
 	"password": {
 	type: String,
 		description: "password of the person"
 },
 	"isAdmin": {
-		type: String,
+		type: Boolean,
 		description: "isAdmin of the personn"
 	}
 //

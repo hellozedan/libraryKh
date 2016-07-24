@@ -11,6 +11,8 @@ var routes = function(Person) {
 
     var personController = require("../controllers/personController")(Person);
 
+    personRouter.route('/search/')
+        .post(personController.get);
     personRouter.route('/')
         .post(personController.post)
         .get(personController.get)
