@@ -11,9 +11,12 @@ var routes = function(BookOrdering) {
 
     var bookOrderingController = require("../controllers/bookOrderingController")(BookOrdering);
 
+    bookOrderingRouter.route('/search')
+        .get(bookOrderingController.doSearch);
     bookOrderingRouter.route('/')
         .post(bookOrderingController.post)
-        .get(bookOrderingController.get);
+        .get(bookOrderingController.get)
+        .delete(bookOrderingController.deleteIt);;
 
     return bookOrderingRouter;
 };

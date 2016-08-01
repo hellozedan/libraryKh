@@ -54,7 +54,7 @@ var bookController = function (Book) {
 
 
         var query = {};
-if(!req.body) {
+        if(req.method==="GET") {
     Book.find(query).sort({'_id': 'descending'}).exec(query, function (err, books) {
         if (err) {
             console.log(err);
@@ -69,11 +69,11 @@ if(!req.body) {
 
 
 
-    if(req.body.title) {
+   /* if(req.body.title) {
         query.title = new RegExp(req.body.title, "i");
     }
-
-    if(req.body.author) {
+*/
+  /*  if(req.body.author) {
         query.author = new RegExp(req.body.author, "i");
     }
     if(req.body.language) {
@@ -84,7 +84,7 @@ if(!req.body) {
     }
     if(req.body.author) {
         query.author = new RegExp(req.body.author, "i");
-    }
+    }*/
 
 
 

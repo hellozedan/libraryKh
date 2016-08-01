@@ -12,35 +12,130 @@ var bookOrderingController = function (BookOrdering) {
 
     var post = function (req, res) {
         var newBookOrdering = req.body;
-        var bookOrdering = new Book(newBookOrdering);
-        bookOrdering.save(function (e) {
+        var bookOrdering = new BookOrdering(newBookOrdering);
+        var editBookOrdering;
+
+
+
+        if(newBookOrdering._id){
+
+
+            editBookOrdering=BookOrdering.find({_id:newBookOrdering._id});
+            editBookOrdering.update(newBookOrdering,function (e) {
+                if (e) {
+                    console.log('error: ' + e);
+                    res.status(500).send(err);
+                } else {
+                    console.log('no error');
+                    res.status(201).send(bookOrdering);
+                }
+            });
+        }
+
+
+      else {
+            bookOrdering.save(function (e) {
+                if (e) {
+                    console.log('error: ' + e);
+                    res.status(500).send(err);
+                } else {
+                    console.log('no error');
+                    res.status(201).send(bookOrdering);
+                }
+            });
+        }
+    }
+
+
+
+
+    var get = function (req, res) {
+        var query = {};
+
+
+        if(req.method==="GET") {
+            BookOrdering.find(query).sort({'_id': 'descending'}).exec(query, function (err, booksOrdering) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send(err);
+                } else {
+                    res.status(200).send(booksOrdering);
+                }
+            });
+
+        }
+
+     /*   else{
+
+       /!*     var idUser = req.headers['userID'];
+
+            if(idUser) {
+                query.userID = new RegExp(idUser, "i");
+            }
+            else{
+                res.status(500).send("Invalid User ID");
+            }*!/
+
+            BookOrdering.find(query).sort({'_id': 'descending'}).exec(query, function (err, booksOrdering) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send(err);
+                } else {
+                    res.status(200).send(booksOrdering);
+                }
+            });
+
+        }*/
+    }
+
+    var deleteIt = function (req, res) {
+
+        var idForDelete = req.headers['bookOrdering_id'];
+        var deleteBookOrdering;
+
+        deleteBookOrdering={_id:idForDelete};
+
+
+        BookOrdering.remove(deleteBookOrdering,function (e) {
             if (e) {
                 console.log('error: ' + e);
                 res.status(500).send(err);
             } else {
                 console.log('no error');
-                res.status(201).send(bookOrdering);
+                res.status(201).send("deleted");
             }
-        });
-    }
-    var get = function (req, res) {
+        })};
+
+
+    var doSearch = function (req, res) {
+
         var query = {};
 
-        BookOrdering.find(query, function (err, booksOrdering) {
+
+
+        var idUser = req.headers['userid'];
+
+        if (idUser) {
+            query.userID = new RegExp(idUser, "i");
+        }
+
+
+
+        BookOrdering.find(query).exec( function (err, a) {
             if (err) {
                 console.log(err);
                 res.status(500).send(err);
             } else {
-                res.status(200).send(booksOrdering);
+                res.status(200).json(a);
             }
         });
 
-    }
-
-
+    };
     return {
         post: post,
-        get: get
+        get: get,
+        deleteIt:deleteIt,
+        doSearch:doSearch
     };
 
 };

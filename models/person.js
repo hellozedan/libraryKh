@@ -42,7 +42,13 @@ var personModel = new Schema({
 	"isAdmin": {
 		type: Boolean,
 		description: "isAdmin of the personn"
+	},
+	"roomOrders": {
+		orders: [
+			{"hour":"","room":"",date:"",status:""}]
 	}
+
+	//when finish delete order from array;
 //
 
 });

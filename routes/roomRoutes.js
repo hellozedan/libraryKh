@@ -11,6 +11,9 @@ var routes = function(Room) {
 
     var roomController = require("../controllers/roomController")(Room);
 
+
+    roomRouter.route('/save')
+        .post(roomController.SaveOrder);
     roomRouter.route('/')
         .post(roomController.post)
         .get(roomController.get)

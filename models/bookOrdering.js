@@ -7,22 +7,27 @@ var mongoose = require('mongoose'),
 
 
 var bookOrderingModel = new Schema({
-	"code": {
+	/*"orderCode": {
 		type:String ,
 		description: "code of the BookOrdering"
-	},
-	"book": {
+	},*/
+	"bookTitle": {
 		type: String,
 		description: "book of the BookOrdering"
 	},
-	"user": {
+	"book_ID": {
+		type: String,
+		description: "book of the BookOrdering"
+	},
+	"user_ID": {
+		type: String,
+		description: "book of the BookOrdering"
+	},
+	"userID": {
 		type: String,
 		description: "user the BookOrdering"
 	},
-	"status": {
-		type: String,
-		description: "status of the BookOrdering"
-	}, "issueDate": {
+	 "issueDate": {
 		type: String,
 		description: "issueDate of the BookOrdering"
 	}, "dueDate": {
@@ -31,7 +36,8 @@ var bookOrderingModel = new Schema({
 	}, "finishDate": {
 		type: String,
 		description: "finishDate of the BookOrdering"
-	}
+	},
+	status: {type: String, enum: ['InProgress', 'OnGoing','Finish','Blocked','Pending']}
 });
 //    Ordering
 

@@ -88,7 +88,11 @@ app.use(function(req, res, next) {
     //console.log('Loading x-access-token -- begin.');
     if((req.path === "/api/person/search") && req.method === "POST"){
         next();
-    }else {
+    }
+    else if((req.path === "/api/room/save") && req.method === "POST"){
+        next();
+    }
+    else {
 
 
         var token = req.body.token || req.query.token || req.headers['token'];
@@ -145,7 +149,7 @@ app.use('/api/author', authorRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/language', languageRoutes);
 app.use('/api/room', RoomRoutes);
-app.use('/api/book', bookOrderingRouter);
+app.use('/api/bookOrdering', bookOrderingRouter);
 
 app.use('/api/messages', messageRouter);
 

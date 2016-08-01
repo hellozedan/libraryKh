@@ -86,6 +86,10 @@ var personController = function (Person) {
              res.status(500).send("Invalid ID");
 
             }
+
+                    if(personFound.password==null){
+                        res.status(500).send("Invalid PassWord");
+                    }
                    if(personFound.password==req.body.Password) {
 
                        res.status(200).send(personFound);

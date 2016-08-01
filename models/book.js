@@ -29,7 +29,22 @@ var bookModel = new Schema({
 	}, "user": {
 		type: String,
 		description: "Brief description about the book"
-	}
+	},
+
+	bookStatus: {type: String, enum: ['Available', 'Not Available']}
+	/*"orderHistory":{
+		type:Array,
+		fields: [
+			{
+				codeOrder:String,
+				userId:String,
+				status:String
+				registrationEnabled: Boolean,
+				checkinEnabled: Boolean
+			}
+		],
+		description: "h,istory order for the book"
+	}*/
 });
 
 //this will expose the the "bookModel" we defined above under the name "Book" to other JS files to use it under node.js
