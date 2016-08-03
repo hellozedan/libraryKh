@@ -69,11 +69,10 @@ var bookController = function (Book) {
 
 
 
-   /* if(req.body.title) {
+    if(req.body.title) {
         query.title = new RegExp(req.body.title, "i");
     }
-*/
-  /*  if(req.body.author) {
+    if(req.body.author) {
         query.author = new RegExp(req.body.author, "i");
     }
     if(req.body.language) {
@@ -82,9 +81,7 @@ var bookController = function (Book) {
     if(req.body.category) {
         query.category = new RegExp(req.body.category, "i");
     }
-    if(req.body.author) {
-        query.author = new RegExp(req.body.author, "i");
-    }*/
+
 
 
 
@@ -121,7 +118,7 @@ var bookController = function (Book) {
         })};
 
 
-
+/*
     var editStatusOfFinish = function (req, res) {
 
         var query = {};
@@ -148,15 +145,14 @@ var thisBook={};
         });
 
 
-    };
+    };*/
 
 
 
     return {
         post: post,
         get: get,
-        deleteIt:deleteIt,
-        editStatusOfFinish:editStatusOfFinish
+        deleteIt:deleteIt
     };
 
 };
