@@ -37,7 +37,7 @@ var bookOrderingModel = new Schema({
 		type: String,
 		description: "finishDate of the BookOrdering"
 	},
-	status: {type: String, enum: ['InProgress', 'OnGoing','Finish','Blocked','Pending']}
+	status: {type: String, enum: ['InProgress', 'OnGoing','Finished','Blocked','Pending']}
 });
 //    Ordering
 

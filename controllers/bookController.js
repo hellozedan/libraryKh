@@ -120,10 +120,43 @@ var bookController = function (Book) {
             }
         })};
 
+
+
+    var editStatusOfFinish = function (req, res) {
+
+        var query = {};
+var thisBook={};
+
+
+        var idBook = req.body;
+
+        if (idBook) {
+            query._id = new RegExp(idBook, "i");
+        }
+
+
+
+       // thisBook= Book.findById(idBook);
+        thisBook.update({_id:idBook},{$set:{bookStatus:'Available'}},function (e) {
+            if (e) {
+                console.log('error: ' + e);
+                res.status(500).send(err);
+            } else {
+                console.log('no error');
+                res.status(201).send("done");
+            }
+        });
+
+
+    };
+
+
+
     return {
         post: post,
         get: get,
-        deleteIt:deleteIt
+        deleteIt:deleteIt,
+        editStatusOfFinish:editStatusOfFinish
     };
 
 };

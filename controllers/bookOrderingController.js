@@ -7,6 +7,7 @@ var httpAdapter = 'https';
 var User = require('../models/user');
 var Utils = require('../utils/utils.js');
 var BookOrdering = require('../models/bookOrdering.js');
+var Book = require('../models/book.js');
 
 var bookOrderingController = function (BookOrdering) {
 
@@ -20,6 +21,7 @@ var bookOrderingController = function (BookOrdering) {
         if(newBookOrdering._id){
 
 
+
             editBookOrdering=BookOrdering.find({_id:newBookOrdering._id});
             editBookOrdering.update(newBookOrdering,function (e) {
                 if (e) {
@@ -27,7 +29,33 @@ var bookOrderingController = function (BookOrdering) {
                     res.status(500).send(err);
                 } else {
                     console.log('no error');
+
+                    if(newBookOrdering.status=="Finished"){
+
+                        var thisBook={};
+                        var idBook = req.body.book_ID;
+                        // thisBook= Book.findById(idBook);
+
+                        Book.update({_id:idBook},{bookStatus:'Available'},function (e) {
+                            if (e) {
+                                console.log('error: ' + e);
+                                res.status(500).send(err);
+                            } else {
+                                console.log('no error');
+                                res.status(201).send(bookOrdering);
+                            }
+                        });
+
+                    }
+                    else{
+                        res.status(201).send(bookOrdering);
+
+                    }
+/*
                     res.status(201).send(bookOrdering);
+*/
+
+
                 }
             });
         }
@@ -131,6 +159,9 @@ var bookOrderingController = function (BookOrdering) {
         });
 
     };
+
+
+
     return {
         post: post,
         get: get,

@@ -5,10 +5,10 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 var languageModel = new Schema({
-	"code": {
+/*	"code": {
 		type: String,
 		description: "code of the Language"
-	},
+	},*/
 	"name": {
 		type: String,
 		description: "name of the Language"

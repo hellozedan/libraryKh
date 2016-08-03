@@ -87,7 +87,7 @@ var personController = function (Person) {
 
             }
 
-                    if(personFound.password==null){
+                    if(!personFound.password){
                         res.status(500).send("Invalid PassWord");
                     }
                    if(personFound.password==req.body.Password) {

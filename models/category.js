@@ -5,10 +5,10 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 var categoryModel = new Schema({
-	"code": {
+/*	"code": {
 		type: String,
 		description: "code of the Category"
-	},
+	},*/
 	"name": {
 		type: String,
 		description: "name of the Category"

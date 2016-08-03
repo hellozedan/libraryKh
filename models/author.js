@@ -5,10 +5,10 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 var authorModel = new Schema({
-	"code": {
+	/*"code": {
 		type: String,
 		description: "code of the author"
-	},
+	},*/
 	"name": {
 		type: String,
 		description: "name of the author"

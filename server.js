@@ -92,6 +92,10 @@ app.use(function(req, res, next) {
     else if((req.path === "/api/room/save") && req.method === "POST"){
         next();
     }
+    else if((req.path === "/api/book/finish") && req.method === "POST"){
+
+        next();
+    }
     else {
 
 
