@@ -21,10 +21,82 @@ var roomModel = new Schema({
 		type: String,
 		description: "status of the room"
 	},
-	dates: {
-		type: Schema.Types.Mixed,
+	lastDate:{
+		type: String,
 		description: "status of the room"
 	},
+
+	Today:{
+		date:String,
+		hours:[
+		/*	{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+
+
+*/
+		],
+	},
+
+	Tomorrow:{
+		date:Date,
+		hours:[
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			/*{"hour":8,"status":true,"user":""},
+			{"hour":9,"status":true,"user":"'"},
+			{"hour":10,"status":true,"user":""},
+			{"hour":11,"status":true,"user":""},
+			{"hour":12,"status":true,"user":""},
+			{"hour":13,"status":true,"user":""},
+			{"hour":14,"status":true,"user":""},
+			{"hour":15,"status":true,"user":""},
+			{"hour":16,"status":true,"user":""},
+			{"hour":17,"status":true,"user":""},*/
+		],
+	},
+
+	AfterTomorrow:{
+		date:Date,
+		hours:[
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},
+			/*{"hour":8,"status":true,"user":""},
+			{"hour":9,"status":true,"user":"'"},
+			{"hour":10,"status":true,"user":""},
+			{"hour":11,"status":true,"user":""},
+			{"hour":12,"status":true,"user":""},
+			{"hour":13,"status":true,"user":""},
+			{"hour":14,"status":true,"user":""},
+			{"hour":15,"status":true,"user":""},
+			{"hour":16,"status":true,"user":""},
+			{"hour":17,"status":true,"user":""},*/
+		],
+	},
+	/*dates: {
+		type: Schema.Types.Mixed,
+		description: "status of the room"
+	},*/
 
 	/*dates: {
 		name:String,

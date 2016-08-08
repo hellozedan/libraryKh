@@ -23,15 +23,21 @@ var personController = function (Person) {
 
         if(!newPerson._id) {
 
-            person.save(function (e) {
-                if (e) {
-                    console.log('error: ' + e);
-                    res.status(500).send(err);
-                } else {
-                    console.log('no error');
-                    res.status(201).send(person);
-                }
-            });
+
+            if(PersonNotExist(person.id)) {
+                person.save(function (e) {
+                    if (e) {
+                        console.log('error: ' + e);
+                        res.status(500).send(err);
+                    } else {
+                        console.log('no error');
+                        res.status(201).send(person);
+                    }
+                });
+            }
+            else{
+                res.status(500).send("Person Exist");
+            }
         }
         else{
 
@@ -51,6 +57,8 @@ var personController = function (Person) {
 
         }
     };
+
+
     var get = function (req, res) {
         var query = {};
 
@@ -71,7 +79,8 @@ var personController = function (Person) {
 
 
             if(req.body.Username) {
-                query.id = new RegExp(req.body.Username, "i");
+               /* query.id =new RegExp(req.body.Username, "i");*/
+                query.id =req.body.Username;
             }
 
             Person.findOne(query).sort({'_id': 'descending'}).exec(query, function (err, personFound) {
@@ -136,6 +145,29 @@ var personController = function (Person) {
 
 };
 
+var PersonNotExist = function(id){
+    var query = {};
+    query.id=id;
 
+    Person.findOne(query).sort({'_id': 'descending'}).exec(query, function (err, personFound) {
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        } else {
+
+            if(personFound==null){
+                return true;
+
+            }
+            else{
+                return false
+            }
+
+
+        }
+    });
+
+    return true;
+}
 
 module.exports = personController;

@@ -46,14 +46,14 @@ var personModel = new Schema({
 	"roomOrders": {
 		orders: [
 			{"hour":"","room":"",date:"",status:""}]
-	},
-	"messagesArray": {
+	}
+	/*"messagesArray": {
 		type: Array,
 		default: []
-	/*	messages: [
-			{"subject":"","date":"",from:"",data:"",isRead:""}]*/
+	/!*	messages: [
+			{"subject":"","date":"",from:"",data:"",isRead:""}]*!/
 	}
-
+*/
 	//when finish delete order from array;
 //
 

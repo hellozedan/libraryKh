@@ -54,7 +54,7 @@ var eventController = function (Event) {
         Event.find(query).sort({'_id': 'descending'}).exec( function (err, events) {
             if (err) {
                 console.log(err);
-                res.status(500).send(err);
+                res.status(500).send("Error");
             } else {
                 res.status(200).send(events);
             }

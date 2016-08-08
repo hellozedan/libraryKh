@@ -8,8 +8,12 @@ var express = require('express');
 var routes = function(Message) {
     var messageRouter = express.Router();
 
+
     var messageController = require("../controllers/messageController")(Message);
 
+
+    messageRouter.route('/search')
+        .get(messageController.doSearch);
     messageRouter.route('/')
         .post(messageController.post)
         .get(messageController.get)

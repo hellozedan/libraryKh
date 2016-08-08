@@ -6,14 +6,24 @@ var mongoose = require('mongoose'),
 
 
 var messageModel = new Schema({
+
     "senderUser":{
+        type: String
+      // can be system
+    },
+    "receiverUser":{
+        type: String
+
+    } ,
+
+  /*  "senderUser":{
     	 type: Schema.Types.ObjectId, 
     	 ref: 'User'  // can be system
     },
     "receiverUser":{
 	   	 type: Schema.Types.ObjectId, 
 	   	 ref: 'User' 
-    } ,
+    } ,*/
 //    
 //    "previousMessage":{
 //	   	 type: Schema.Types.ObjectId, 
@@ -31,6 +41,7 @@ var messageModel = new Schema({
         type:String,
         description: "Content of the message"
 	},
+
     "isRead":{
         type:Boolean,
     	default: false,
@@ -55,7 +66,7 @@ var messageModel = new Schema({
 //        type:String,
 //        description: "userid of the adder (or system)"
 //    },
-    "type":{
+    /*"type":{
         type:String,
         description: "type of the message",
         default: "normal",
@@ -71,7 +82,7 @@ var messageModel = new Schema({
   	[{
   		type: Schema.Types.Mixed, 
   		"description": "Array of patricipating users",
-	}]
+	}]*/
  
 });
 

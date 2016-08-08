@@ -12,8 +12,9 @@ var roomController = function (Room) {
 
     var post = function (req, res) {
         var newRoom = req.body;
-        var room = new Room(newRoom);
+        var room = DefineRoomDates(newRoom);
         var editRoom;
+
 
 
         if(!newRoom._id) {
@@ -23,6 +24,8 @@ var roomController = function (Room) {
                     console.log('error: ' + e);
                     res.status(500).send(err);
                 } else {
+
+
                     console.log('no error');
                     res.status(201).send(room);
                 }
@@ -71,7 +74,80 @@ var roomController = function (Room) {
     }
 
 
+    var SaveOrder = function (req, res) {
+        var orderRoom = req.body;
+        var query = {};
+        var room=orderRoom.room;
+        var date=orderRoom.date;
+        var hour=orderRoom.hour;
+        var idUser = orderRoom.userID;
+        var roomFound={};
 
+
+        if (room) {
+            query.name = room;
+        }
+        else
+        {
+            res.status(500).send("room not found");
+        }
+
+        Room.findOne(query).exec(query, function (err, rooms) {
+            if (err) {
+                console.log(err);
+                res.status(500).send(err);
+            } else {
+                roomFound=rooms;
+            }
+        });
+        if(date==roomFound.Today.date){
+            roomFound.Today.hours.push({"hour":hour,"status":false,"user":idUser});
+            res.status(201).send("order saved");
+        }
+
+
+        console.log(roomFound);
+        res.status(500).send("Room is not available");
+
+        /* if(!roomFound.dates[date]){
+             roomFound.dates.push(date);
+             roomFound.dates[date]=[
+                 {"hour":8,"status":true,"user":idUser},
+                 {"hour":9,"status":true,"user":idUser},
+                 {"hour":10,"status":true,"user":idUser},
+                 {"hour":11,"status":true,"user":idUser},
+                 {"hour":12,"status":true,"user":idUser},
+                 {"hour":13,"status":true,"user":idUser},
+                 {"hour":14,"status":true,"user":idUser},
+                 {"hour":15,"status":true,"user":idUser},
+                 {"hour":16,"status":true,"user":idUser},
+                 {"hour":17,"status":true,"user":idUser},
+             ];
+
+
+             roomFound.dates[date][hour-8]=  {"hour":hour,"status":false,"user":idUser};
+             res.status(201).send("order saved");
+
+
+         }
+         else{
+
+             if( roomFound.dates[date][hour-8].status=true){
+                 roomFound.dates[date][hour-8]=  {"hour":hour,"status":false,"user":idUser};
+                 res.status(201).send("order saved");
+
+             }
+             else{
+                 res.status(500).send("Room is not available");
+             }
+
+         }
+ */
+        // cupdate hour
+
+
+
+    }
    /* var SaveOrder = function (req, res) {
         var orderRoom = req.body;
         var query = {};
@@ -146,7 +222,7 @@ var roomController = function (Room) {
 
     }*/
 
-    var SaveOrder = function (req, res) {
+  /*  var SaveOrder = function (req, res) {
         var orderRoom = req.body;
         var query = {};
         var room=orderRoom.room;
@@ -208,7 +284,7 @@ console.log(roomFound);
 
 
     }
-
+*/
     /*
 
      if(!room.dates["15-07-2015"])
@@ -244,6 +320,20 @@ console.log(roomFound);
 
 };
 
+var  DefineRoomDates = function(newRoom){
+    var x =17;
+    var room=newRoom;
+    room.lastDate="today";
+    room.Today={};
+   room.Today.date= "today";
+    room.Today.hours=[];
+    var i;
+    for (i = 8; i <= x; i++) {
+        room.Today.hours.push({hour:i,status:true,user:''});
+    }
 
+
+    return new Room(room);
+}
 
 module.exports = roomController;

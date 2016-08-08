@@ -20,6 +20,7 @@ var Category = require('./models/category');
 var Language = require('./models/language');
 var Room = require('./models/room');
 var BookOrdering = require('./models/bookOrdering');
+var Messages = require('./models/messages');
 
 var Message = require('./models/message');
 
@@ -68,7 +69,7 @@ var RoomRoutes = require("./routes/roomRoutes")(Room);
 var bookOrderingRouter = require("./routes/bookOrderingRoutes")(BookOrdering);
 
 var messageRouter = require("./routes/messageRoutes")(Message);
-
+var messagesRouter = require("./routes/messagesRoutes")(Messages);
 
 //app.use(function(req, res, next){
 //    res.setHeader('Access-Control-Allow-Origin', '*');
@@ -76,7 +77,6 @@ var messageRouter = require("./routes/messageRoutes")(Message);
 //    res.setHeader('Access-Control-Allow-Headers', '*');
 //    next();
 //});
-
 
 
 
@@ -93,6 +93,10 @@ app.use(function(req, res, next) {
         next();
     }
     else if((req.path === "/api/book/finish") && req.method === "POST"){
+
+        next();
+    }
+    else if((req.path === "/api/message/search") && req.method === "GET"){
 
         next();
     }
@@ -155,7 +159,8 @@ app.use('/api/language', languageRoutes);
 app.use('/api/room', RoomRoutes);
 app.use('/api/bookOrdering', bookOrderingRouter);
 
-app.use('/api/messages', messageRouter);
+app.use('/api/message', messageRouter);
+app.use('/api/messages', messagesRouter);
 
 
 

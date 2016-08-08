@@ -2,16 +2,27 @@
  * Created by Joe on 06/06/2015.
  */
 
+
+
+var mongoose = require('mongoose');
+var moment=require('moment');
+var httpAdapter = 'https';
+var User = require('../models/user');
 var Utils = require('../utils/utils.js');
+var Message = require('../models/message.js');
 
 var messageController = function(Message){
+
+
+    // add new message
     var post = function (req, res) {
         if (req.body && req.body.message) {
 
             var newMessage = req.body.message;
 
             var message = new Message(newMessage);
-            message.senderUser=req.authuser._id;
+          /*  message.senderUser=req.authuser._id;*/
+            // add user sender from client
             message.save(function (e) {
                 if (e) {
                     console.log('error: ' + e);
@@ -26,19 +37,19 @@ var messageController = function(Message){
 
     var get = function (req, res) {
         var query = {
-            $or: [{receiverUser: req.authuser._id}, {senderUser: req.authuser._id}]
+            $or: [{receiverUser: req.authuser._id}, {senderUser: req.authuser._id}] // in clinet add filter if user is the sender of receiver
         };
-        console.log('no error');
+        console.log('no error-good');
         Message.find(query) //, function (err, messages) {
           //  .sort({date_added: -1})
             .populate('receiverUser', 'firstName lastName fbPhotoUrl')
             .populate('senderUser', 'firstName lastName fbPhotoUrl')
-            .exec(function (err, messages) {
+            .exec(function (err, message) {
                 if (err) {
                     console.log(err);
                     res.status(500).send(err);
                 } else {
-                    res.json(messages);
+                    res.json(message);
                 }
             });
     };
@@ -113,6 +124,34 @@ var messageController = function(Message){
         });
     };
 
+
+
+    var doSearch = function (req, res) {
+
+        var query = {};
+
+
+
+        var idUser = req.headers['userid'];
+
+        if (idUser) {
+            query.receiverUser = new RegExp(idUser, "i");
+        }
+
+
+
+        Message.find(query).exec( function (err, a) {
+            if (err) {
+                console.log(err);
+                res.status(500).send(err);
+            } else {
+                res.status(200).json(a);
+            }
+        });
+
+    };
+
+
     return{
         post: post,
         get: get,
@@ -121,7 +160,8 @@ var messageController = function(Message){
         patch: patch,
         delete: deleteItem,
         deleteall: deleteAll,
-        put: put
+        put: put,
+        doSearch:doSearch
     };
 };
 
