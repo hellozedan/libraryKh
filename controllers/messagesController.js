@@ -19,7 +19,7 @@ var bookController = function (Messages) {
 
         if(newMSG._id) {
             editMSG=Messages.find({_id:newMSG._id});
-            editMSG.update(author,function (e) {
+            editMSG.update(message,function (e) {
                 if (e) {
                     console.log('error: ' + e);
                     res.status(500).send(err);

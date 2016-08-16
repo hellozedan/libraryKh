@@ -30,7 +30,7 @@ var bookOrderingController = function (BookOrdering) {
                 } else {
                     console.log('no error');
 
-                    if(newBookOrdering.status=="Finished"){
+                    if(newBookOrdering.status=="Finished" || newBookOrdering.status=="Cancelled"){
 
                         var thisBook={};
                         var idBook = req.body.book_ID;

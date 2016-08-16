@@ -22,12 +22,12 @@ var roomModel = new Schema({
 		description: "status of the room"
 	},
 	lastDate:{
-		type: String,
+		type: Date,
 		description: "status of the room"
 	},
 
 	Today:{
-		date:String,
+		date:Date,
 		hours:[
 		/*	{"hour":String,"status":Boolean,"user":String},
 			{"hour":String,"status":Boolean,"user":String},
@@ -47,31 +47,13 @@ var roomModel = new Schema({
 	Tomorrow:{
 		date:Date,
 		hours:[
-			{"hour":String,"status":Boolean,"user":String},
-			{"hour":String,"status":Boolean,"user":String},
-			{"hour":String,"status":Boolean,"user":String},
-			{"hour":String,"status":Boolean,"user":String},
-			{"hour":String,"status":Boolean,"user":String},
-			{"hour":String,"status":Boolean,"user":String},
-			{"hour":String,"status":Boolean,"user":String},
-			{"hour":String,"status":Boolean,"user":String},
-			{"hour":String,"status":Boolean,"user":String},
-			/*{"hour":8,"status":true,"user":""},
-			{"hour":9,"status":true,"user":"'"},
-			{"hour":10,"status":true,"user":""},
-			{"hour":11,"status":true,"user":""},
-			{"hour":12,"status":true,"user":""},
-			{"hour":13,"status":true,"user":""},
-			{"hour":14,"status":true,"user":""},
-			{"hour":15,"status":true,"user":""},
-			{"hour":16,"status":true,"user":""},
-			{"hour":17,"status":true,"user":""},*/
 		],
 	},
 
 	AfterTomorrow:{
 		date:Date,
 		hours:[
+		/*	{"hour":String,"status":Boolean,"user":String},
 			{"hour":String,"status":Boolean,"user":String},
 			{"hour":String,"status":Boolean,"user":String},
 			{"hour":String,"status":Boolean,"user":String},
@@ -79,8 +61,7 @@ var roomModel = new Schema({
 			{"hour":String,"status":Boolean,"user":String},
 			{"hour":String,"status":Boolean,"user":String},
 			{"hour":String,"status":Boolean,"user":String},
-			{"hour":String,"status":Boolean,"user":String},
-			{"hour":String,"status":Boolean,"user":String},
+			{"hour":String,"status":Boolean,"user":String},*/
 			/*{"hour":8,"status":true,"user":""},
 			{"hour":9,"status":true,"user":"'"},
 			{"hour":10,"status":true,"user":""},
