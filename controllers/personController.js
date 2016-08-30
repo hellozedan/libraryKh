@@ -8,6 +8,7 @@ var User = require('../models/user');
 var Utils = require('../utils/utils.js');
 var Person = require('../models/person.js');
 
+
 var personController = function (Person) {
 
     var post = function (req, res) {
@@ -133,13 +134,47 @@ var personController = function (Person) {
         })};
 
 
+    var AddFollower=function(req, res) {
+        var bookId = req.body.book_ID;
+        var user_ID = req.body.user_ID;
+        var status = req.body.status;
+        debugger
+        var editPerson;
+        editPerson=Person.find({_id:user_ID});
+        if(status=='follow'){
+            if(!editPerson.followersArray){
+                editPerson.followersArray=[];}
+            editPerson.followersArray.push({bookId:bookId});
+        }
+        else if(status='unfollow'){
+            if(!editPerson.followersArray){
+                editPerson.followersArray=[];}
+            var i=0;
+            for(i=0;i<editPerson.followersArray.length;i++){
+                if(editPerson.followersArray[i].bookId==bookId){
+                    delete editPerson.followersArray[i];
+                }
+            }
+        }
 
+        editPerson.update(editPerson,function (e) {
+            if (e) {
+                console.log('error: ' + e);
+                res.status(500).send(err);
+            } else {
+                console.log('no error');
+                res.status(201).send('Ok');
+            }
+        });
+
+    }
 
     return {
 
         post: post,
         get: get,
-        deleteIt:deleteIt
+        deleteIt:deleteIt,
+        AddFollower:AddFollower
 
     };
 
@@ -169,5 +204,8 @@ var PersonNotExist = function(id){
 
     return true;
 }
+
+
+
 
 module.exports = personController;

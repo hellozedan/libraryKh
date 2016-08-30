@@ -13,12 +13,26 @@ var routes = function(Book) {
 
     bookRouter.route('/search/')
         .post(bookController.get);
-    bookRouter.route('/')
-        .post(bookController.post)
-        .get(bookController.get)
-        .delete(bookController.deleteIt);
 
-    return bookRouter;
+
+
+    bookRouter.route('/AddRate/')
+        .post(bookController.AddRate);
+    bookRouter.route('/f/')
+        .post(bookController.hah);
+
+
+
+    bookRouter.route('/getTopTen/')
+        .get(bookController.getTopTen);
+    bookRouter.route('/FollowBook/')
+        .post(bookController.AddFollower);
+    bookRouter.route('/')
+    .post(bookController.post)
+    .get(bookController.get)
+    .delete(bookController.deleteIt);
+
+return bookRouter;
 };
 
 module.exports =  routes;

@@ -46,6 +46,9 @@ var personModel = new Schema({
 	"roomOrders": {
 		orders: [
 			{"hour":"","room":"",date:"",status:""}]
+	},
+	followersArray:{
+		type:Array
 	}
 	/*"messagesArray": {
 		type: Array,

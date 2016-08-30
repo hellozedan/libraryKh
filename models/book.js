@@ -31,7 +31,19 @@ var bookModel = new Schema({
 		description: "Brief description about the book"
 	},
 
-	bookStatus: {type: String, enum: ['Available', 'Not Available']}
+	bookStatus: {type: String, enum: ['Available', 'Not Available']},
+	followersArray:{
+		type:Array
+	},
+
+	AvgRates:{
+		type: Number,
+	},
+	CountRates:{
+		type: Number,
+	}
+
+
 	/*"orderHistory":{
 		type:Array,
 		fields: [
