@@ -8,6 +8,8 @@ var User = require('../models/user');
 var Utils = require('../utils/utils.js');
 var BookOrdering = require('../models/bookOrdering.js');
 var Book = require('../models/book.js');
+var Person = require('../models/person.js');
+var Messages = require('../models/messages.js');
 
 var bookOrderingController = function (BookOrdering) {
 
@@ -15,7 +17,7 @@ var bookOrderingController = function (BookOrdering) {
         var newBookOrdering = req.body;
         var bookOrdering = new BookOrdering(newBookOrdering);
         var editBookOrdering;
-
+        var idBook = req.body.book_ID;
 
 
         if(newBookOrdering._id){
@@ -33,22 +35,89 @@ var bookOrderingController = function (BookOrdering) {
                     if(newBookOrdering.status=="Finished" || newBookOrdering.status=="Cancelled"){
 
                         var thisBook={};
-                        var idBook = req.body.book_ID;
-                        // thisBook= Book.findById(idBook);
 
-                        Book.update({_id:idBook},{bookStatus:'Available'},function (e) {
+                       // remove book from the list of person
+                        var thisbook={};
+                       Book.find({_id:idBook}
+                       ).exec({_id:idBook}, function (err, books) {
+                                if (e) {
+                                    console.log('error: ' + e);
+                                    res.status(500).send(err);
+                                } else {
+                                    thisbook = books;
+
+                                    console.log(thisbook);
+                                    console.log(thisbook.followersArray[0]);
+                                    if (thisbook.followersArray) {
+                                        console.log(thisbook.followersArray[0]);
+                                        for (var i = 0; i < thisbook.followersArray.length; i++) {
+
+
+                                            // need to review //TODO
+                                            // delete book from followers array for each person
+                                            var followerPersonID = thisbook.followersArray[i];
+                                            var followerPerson = Person.find({_id: followerPersonID});
+                                            var index = followerPerson.followersArray.indexOf(thisbook.followersArray[i]);
+                                            followerPerson.followersArray.splice(index, 1);
+
+                                        }
+
+                                        var i=0;
+
+                                        function A(i){
+
+
+                                        }
+                                        var title = thisbook.title;
+
+
+
+                                        //send messages for followers people
+                                        for (var i = 0; i < thisbook.followersArray.length; i++) {
+
+                                            var newMSG = {
+                                                senderUser: '311538417',
+                                                receiverUser: thisbook.followersArray[i],
+                                                senderName: 'Admin',
+                                                receiverName: 'Book Follower',
+                                                content: 'Your Book that yo followed:' + title + 'Is available noe, you can order it'
+                                            };
+                                            var message = new Messages(newMSG);
+                                            console.log('message');
+                                            message.save(function (e) {
+                                                if (e) {
+                                                    console.log('error: ' + e);
+
+                                                } else {
+                                                    console.log('no error');
+
+                                                }
+                                            });
+
+                                        }
+
+                                        // remove all people from the list of book
+
+
+                                    }
+
+
+                                }});
+
+                        //change place
+                        Book.update({_id:idBook},{bookStatus:'Available',user:"",followersArray:[]},function (e) {
                             if (e) {
                                 console.log('error: ' + e);
                                 res.status(500).send(err);
                             } else {
                                 console.log('no error');
-                                res.status(201).send(bookOrdering);
+                                res.status(201).send("Done");
                             }
                         });
 
                     }
-                    else{
-                        res.status(201).send(bookOrdering);
+
+
 
                     }
 /*
@@ -56,7 +125,7 @@ var bookOrderingController = function (BookOrdering) {
 */
 
 
-                }
+
             });
         }
 
@@ -159,7 +228,19 @@ var bookOrderingController = function (BookOrdering) {
         });
 
     };
+var A=function(i){
+    if(i>=0){
+        B(i);
+    }
+    else{
+        //Do finally
+    }
+}
 
+    var B=function(i){
+
+
+    }
 
 
     return {

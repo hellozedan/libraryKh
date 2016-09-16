@@ -19,7 +19,7 @@ var routes = function(Book) {
     bookRouter.route('/AddRate/')
         .post(bookController.AddRate);
     bookRouter.route('/f/')
-        .post(bookController.hah);
+        .get(bookController.hah);
 
 
 

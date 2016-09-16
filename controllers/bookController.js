@@ -31,6 +31,11 @@ var bookController = function (Book) {
         }
 
         else{
+            book.user="";
+            book.bookStatus='Available';
+            book.followersArray=[];
+            book.AvgRates=0;
+            book.CountRates=0;
             book.save(function (e) {
                 if (e) {
                     console.log('error: ' + e);
@@ -155,26 +160,9 @@ var bookController = function (Book) {
 
 
     var AddRate=function(req, res) {
-        var bookId = req.body.book_ID;
-        var SumRates = req.body.SumRates;
-        var CountRates;
-        var AvgRates;
 
-
-        var editBook;
-        editBook=Book.find({_id:bookId});
-       if(editBook.CountRates && editBook.AvgRates) {
-           CountRates = editBook.CountRates;
-           AvgRates = editBook.AvgRates;
-           AvgRates = ((AvgRates * CountRates) + SumRates) / AvgRates;
-           CountRates++;
-       }else{
-           CountRates=1;
-           AvgRates=SumRates;
-       }
-
-
-        editBook.update(editBook,function (e) {
+        var book = req.body;
+            Book.update({_id:req.body._id},book,function (e) {
             if (e) {
                 console.log('error: ' + e);
                 res.status(500).send(err);
@@ -225,8 +213,7 @@ var bookController = function (Book) {
         var book = new Book(newBook);
         var editBook;
 
-
-        Book.find({}).sort({'_id': 'descending'}).exec(query, function (err, books) {
+        Book.find({}).sort({'_id': 'descending'}).exec({}, function (err, books) {
             if (err) {
                 console.log(err);
                 res.status(500).send(err);
@@ -300,7 +287,7 @@ var bookController = function (Book) {
         RemoveAllFollower:RemoveAllFollower,
         getTopTen:getTopTen,
         AddRate:AddRate,
-     hah:hah
+       hah:hah
     };
 
 };

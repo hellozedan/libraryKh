@@ -138,7 +138,7 @@ var personController = function (Person) {
         var bookId = req.body.book_ID;
         var user_ID = req.body.user_ID;
         var status = req.body.status;
-        debugger
+
         var editPerson;
         editPerson=Person.find({_id:user_ID});
         if(status=='follow'){
@@ -168,13 +168,29 @@ var personController = function (Person) {
         });
 
     }
+    var getPersonById = function (req, res) {
+        debugger
+        var query = {};
+        var id=req.headers['person_id'];
+
+
+        Person.findById(id, function (err, persons) {
+            if (err) {
+                console.log(err);
+                res.status(500).send(err);
+            } else {
+                res.status(200).send(persons);
+            }
+        });
+    }
 
     return {
 
         post: post,
         get: get,
         deleteIt:deleteIt,
-        AddFollower:AddFollower
+        AddFollower:AddFollower,
+        getPersonById:getPersonById
 
     };
 
@@ -204,6 +220,7 @@ var PersonNotExist = function(id){
 
     return true;
 }
+
 
 
 

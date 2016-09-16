@@ -14,6 +14,8 @@ var routes = function(Person) {
         .post(personController.AddFollower);
     personRouter.route('/search/')
         .post(personController.get);
+    personRouter.route('/getPersonById/')
+        .get(personController.getPersonById);
     personRouter.route('/')
         .post(personController.post)
         .get(personController.get)

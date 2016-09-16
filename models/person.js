@@ -17,6 +17,11 @@ var personModel = new Schema({
 		type: String,
 		description: "lastName of the person"
 	},
+	"MessagesLength": {
+		type: Number,
+		default:0,
+		description: "lastName of the person"
+	},
 	"gender": {
 		type: String,
 		description: "gender of the person"

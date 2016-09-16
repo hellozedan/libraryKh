@@ -7,15 +7,22 @@ var httpAdapter = 'https';
 var User = require('../models/user');
 var Utils = require('../utils/utils.js');
 var Messages = require('../models/messages.js');
+var Person = require('../models/person.js');
 
-var bookController = function (Messages) {
+
+var messagesController = function (Messages) {
 
     var post = function (req, res) {
         var newMSG = req.body;
         var message = new Messages(newMSG);
 
         var editMSG;
-
+        var number=0;
+       if (newMSG.isRead){
+           number--;
+       }else{
+           number++;
+       }
 
         if(newMSG._id) {
             editMSG=Messages.find({_id:newMSG._id});
@@ -24,6 +31,17 @@ var bookController = function (Messages) {
                     console.log('error: ' + e);
                     res.status(500).send(err);
                 } else {
+                    var query = {id: message.receiverUser};
+
+                    Person.update(query,{ $inc: { MessagesLength: number }}).exec(query, function (err, persons) {
+                        if (err) {
+                            console.log(err);
+                            res.status(500).send(err);
+                        } else {
+
+                        }
+                    });
+
                     console.log('no error');
                     res.status(201).send(message);
                 }
@@ -36,8 +54,20 @@ var bookController = function (Messages) {
                     console.log('error: ' + e);
                     res.status(400).send(err);
                 } else {
-                    console.log('no error');
+
+                    var query = {id: message.receiverUser};
+
+                    Person.update(query,{ $inc: { MessagesLength: 1 }}).exec(query, function (err, persons) {
+                        if (err) {
+                            console.log(err);
+                            res.status(500).send(err);
+                        } else {
+
+                        }
+                    });
+
                     res.status(201).send(message);
+
                 }
             });
 
@@ -84,4 +114,4 @@ var bookController = function (Messages) {
 
 
 
-module.exports = bookController;
+module.exports = messagesController;
