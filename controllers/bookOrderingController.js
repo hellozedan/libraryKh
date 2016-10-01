@@ -2,7 +2,7 @@
  * Created by josephk on 6/10/2015.
  */
 var mongoose = require('mongoose');
-var moment=require('moment');
+var moment = require('moment');
 var httpAdapter = 'https';
 var User = require('../models/user');
 var Utils = require('../utils/utils.js');
@@ -20,64 +20,56 @@ var bookOrderingController = function (BookOrdering) {
         var idBook = req.body.book_ID;
 
 
-        if(newBookOrdering._id){
+        if (newBookOrdering._id) {
 
 
-
-            editBookOrdering=BookOrdering.find({_id:newBookOrdering._id});
-            editBookOrdering.update(newBookOrdering,function (e) {
+            editBookOrdering = BookOrdering.find({_id: newBookOrdering._id});
+            editBookOrdering.update(newBookOrdering, function (e) {
                 if (e) {
                     console.log('error: ' + e);
                     res.status(500).send(err);
                 } else {
                     console.log('no error');
 
-                    if(newBookOrdering.status=="Finished" || newBookOrdering.status=="Cancelled"){
+                    if (newBookOrdering.status == "Finished" || newBookOrdering.status == "Cancelled") {
 
-                        var thisBook={};
+                        var thisBook = {};
 
-                       // remove book from the list of person
-                        var thisbook={};
-                       Book.find({_id:idBook}
-                       ).exec({_id:idBook}, function (err, books) {
+                        // remove book from the list of person
+                        var thisbook = {};
+                        Book.find({_id: idBook}
+                        ).exec({_id: idBook}, function (err, books) {
                                 if (e) {
                                     console.log('error: ' + e);
                                     res.status(500).send(err);
                                 } else {
-                                    thisbook = books;
-
-                                    console.log(thisbook);
-                                    console.log(thisbook.followersArray[0]);
-                                    if (thisbook.followersArray) {
-                                        console.log(thisbook.followersArray[0]);
-                                        for (var i = 0; i < thisbook.followersArray.length; i++) {
+                                    thisbook = books[0];
 
 
-                                            // need to review //TODO
-                                            // delete book from followers array for each person
-                                            var followerPersonID = thisbook.followersArray[i];
-                                            var followerPerson = Person.find({_id: followerPersonID});
-                                            var index = followerPerson.followersArray.indexOf(thisbook.followersArray[i]);
-                                            followerPerson.followersArray.splice(index, 1);
-
-                                        }
-
-                                        var i=0;
-
-                                        function A(i){
+                                    if (thisbook&&thisbook.followersArray && thisbook.followersArray.length>0) {
+                                        /* for (var i = 0; i < thisbook.followersArray.length; i++) {
 
 
-                                        }
+                                         // need to review //TODO
+                                         // delete book from followers array for each person
+                                         var followerPersonID = thisbook.followersArray[i];
+                                         var followerPerson = Person.find({_id: followerPersonID});
+                                         var index = followerPerson.followersArray.indexOf(thisbook.followersArray[i]);
+                                         followerPerson.followersArray.splice(index, 1);
+
+                                         }*/
+
+
                                         var title = thisbook.title;
+                                        followersManger(thisbook.followersArray, 0, title);
 
-
-
-                                        //send messages for followers people
-                                        for (var i = 0; i < thisbook.followersArray.length; i++) {
+                                        function followersManger(followersArray, i, title) {
 
                                             var newMSG = {
                                                 senderUser: '311538417',
-                                                receiverUser: thisbook.followersArray[i],
+                                                receiverUser: followersArray[i].userId,
+                                                senderUser_ID: '57b3882d98becdc464d4a2a8',
+                                                receiverUser_ID: followersArray[i].userId,
                                                 senderName: 'Admin',
                                                 receiverName: 'Book Follower',
                                                 content: 'Your Book that yo followed:' + title + 'Is available noe, you can order it'
@@ -89,48 +81,76 @@ var bookOrderingController = function (BookOrdering) {
                                                     console.log('error: ' + e);
 
                                                 } else {
+
+                                                    Person.update({_id: followersArray[i].userId}, {
+                                                        $inc: { MessagesLength: 1 }
+                                                    }, function (e) {
+                                                        if (e) {
+                                                            console.log('error: ' + e);
+                                                            res.status(500).send(err);
+                                                        } else {
+                                                            console.log('no error');
+
+                                                        }
+                                                    });
                                                     console.log('no error');
 
+                                                }
+                                                i++;
+                                                if (i < followersArray.length) {
+                                                    followersManger(followersArray, i, title);
+                                                }
+                                                else {
+                                                    Book.update({_id: idBook}, {
+                                                        bookStatus: 'Available',
+                                                        user: "",
+                                                        followersArray: []
+                                                    }, function (e) {
+                                                        if (e) {
+                                                            console.log('error: ' + e);
+                                                            res.status(500).send(err);
+                                                        } else {
+                                                            console.log('no error');
+                                                            res.status(201).send("Done");
+                                                        }
+                                                    });
                                                 }
                                             });
 
                                         }
 
-                                        // remove all people from the list of book
 
-
+                                    } else {
+                                        Book.update({_id: idBook}, {
+                                            bookStatus: 'Available',
+                                            user: "",
+                                            followersArray: []
+                                        }, function (e) {
+                                            if (e) {
+                                                console.log('error: ' + e);
+                                                res.status(500).send(err);
+                                            } else {
+                                                console.log('no error');
+                                                res.status(201).send("Done");
+                                            }
+                                        });
                                     }
 
 
-                                }});
-
-                        //change place
-                        Book.update({_id:idBook},{bookStatus:'Available',user:"",followersArray:[]},function (e) {
-                            if (e) {
-                                console.log('error: ' + e);
-                                res.status(500).send(err);
-                            } else {
-                                console.log('no error');
-                                res.status(201).send("Done");
-                            }
-                        });
-
-                    }
-
+                                }
+                            });
 
 
                     }
-/*
-                    res.status(201).send(bookOrdering);
-*/
 
 
+                }
 
             });
         }
 
 
-      else {
+        else {
             bookOrdering.save(function (e) {
                 if (e) {
                     console.log('error: ' + e);
@@ -144,13 +164,11 @@ var bookOrderingController = function (BookOrdering) {
     }
 
 
-
-
     var get = function (req, res) {
         var query = {};
 
 
-        if(req.method==="GET") {
+        if (req.method === "GET") {
             BookOrdering.find(query).sort({'_id': 'descending'}).exec(query, function (err, booksOrdering) {
                 if (err) {
                     console.log(err);
@@ -162,27 +180,27 @@ var bookOrderingController = function (BookOrdering) {
 
         }
 
-     /*   else{
+        /*   else{
 
-       /!*     var idUser = req.headers['userID'];
+         /!*     var idUser = req.headers['userID'];
 
-            if(idUser) {
-                query.userID = new RegExp(idUser, "i");
-            }
-            else{
-                res.status(500).send("Invalid User ID");
-            }*!/
+         if(idUser) {
+         query.userID = new RegExp(idUser, "i");
+         }
+         else{
+         res.status(500).send("Invalid User ID");
+         }*!/
 
-            BookOrdering.find(query).sort({'_id': 'descending'}).exec(query, function (err, booksOrdering) {
-                if (err) {
-                    console.log(err);
-                    res.status(500).send(err);
-                } else {
-                    res.status(200).send(booksOrdering);
-                }
-            });
+         BookOrdering.find(query).sort({'_id': 'descending'}).exec(query, function (err, booksOrdering) {
+         if (err) {
+         console.log(err);
+         res.status(500).send(err);
+         } else {
+         res.status(200).send(booksOrdering);
+         }
+         });
 
-        }*/
+         }*/
     }
 
     var deleteIt = function (req, res) {
@@ -190,10 +208,10 @@ var bookOrderingController = function (BookOrdering) {
         var idForDelete = req.headers['bookOrdering_id'];
         var deleteBookOrdering;
 
-        deleteBookOrdering={_id:idForDelete};
+        deleteBookOrdering = {_id: idForDelete};
 
 
-        BookOrdering.remove(deleteBookOrdering,function (e) {
+        BookOrdering.remove(deleteBookOrdering, function (e) {
             if (e) {
                 console.log('error: ' + e);
                 res.status(500).send(err);
@@ -201,13 +219,13 @@ var bookOrderingController = function (BookOrdering) {
                 console.log('no error');
                 res.status(201).send("deleted");
             }
-        })};
+        })
+    };
 
 
     var doSearch = function (req, res) {
 
         var query = {};
-
 
 
         var idUser = req.headers['userid'];
@@ -217,8 +235,7 @@ var bookOrderingController = function (BookOrdering) {
         }
 
 
-
-        BookOrdering.find(query).exec( function (err, a) {
+        BookOrdering.find(query).exec(function (err, a) {
             if (err) {
                 console.log(err);
                 res.status(500).send(err);
@@ -228,16 +245,16 @@ var bookOrderingController = function (BookOrdering) {
         });
 
     };
-var A=function(i){
-    if(i>=0){
-        B(i);
+    var A = function (i) {
+        if (i >= 0) {
+            B(i);
+        }
+        else {
+            //Do finally
+        }
     }
-    else{
-        //Do finally
-    }
-}
 
-    var B=function(i){
+    var B = function (i) {
 
 
     }
@@ -246,12 +263,11 @@ var A=function(i){
     return {
         post: post,
         get: get,
-        deleteIt:deleteIt,
-        doSearch:doSearch
+        deleteIt: deleteIt,
+        doSearch: doSearch
     };
 
 };
-
 
 
 module.exports = bookOrderingController;

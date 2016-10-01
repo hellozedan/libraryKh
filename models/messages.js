@@ -9,7 +9,15 @@ var messagesModel = new Schema({
 		type: String
 		// can be system
 	},
+	"senderUser_ID":{
+		type: String
+
+	} ,
 	"receiverUser":{
+		type: String
+
+	} ,
+	"receiverUser_ID":{
 		type: String
 
 	} ,

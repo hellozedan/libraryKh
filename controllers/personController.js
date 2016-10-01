@@ -169,7 +169,7 @@ var personController = function (Person) {
 
     }
     var getPersonById = function (req, res) {
-        debugger
+
         var query = {};
         var id=req.headers['person_id'];
 
@@ -179,6 +179,7 @@ var personController = function (Person) {
                 console.log(err);
                 res.status(500).send(err);
             } else {
+
                 res.status(200).send(persons);
             }
         });
