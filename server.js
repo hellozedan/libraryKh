@@ -5,7 +5,6 @@ var express =  require('express'),
 
 //var cors = require("cors");
 
-var fbController = require('./controllers/fbController');
 
 //var db = mongoose.connect('mongodb://localhost/userAPI');
 var db = mongoose.connect('mongodb://user:admin@ds023674.mlab.com:23674/librarymongodb');
@@ -164,17 +163,6 @@ app.use('/api/messages', messagesRouter);
 
 
 
-app.post('/api/getu/:fbUserToken', function (req, res) {
-    console.log('triggered /getu - start getting user data from FB')
-    fbController.getUserData(req, req.params.fbUserToken, function (currentBtToken,_id, err) {
-        if(err){
-            res.send('There was an error logging in. Please try again soon.');
-        }else{
-            res.send('{"token":"'+currentBtToken+'","_id":"'+_id+'"}');
-        }
-    });
-    //res.send('GEt user data done. ');
-});
 
 
 //simple startit forward route
