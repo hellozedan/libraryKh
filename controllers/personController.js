@@ -12,6 +12,7 @@ var Person = require('../models/person.js');
 var personController = function (Person) {
 
     var post = function (req, res) {
+
         var newPerson = req.body;
         if(!newPerson._id) {
             var token = require('crypto').randomBytes(64).toString('hex');

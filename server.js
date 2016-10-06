@@ -1,7 +1,6 @@
-
-var express =  require('express'),
+var express = require('express'),
     mongoose = require('mongoose'),
-    bodyParser = require ('body-parser');
+    bodyParser = require('body-parser');
 
 //var cors = require("cors");
 
@@ -28,15 +27,14 @@ var cors = require('cors');
 var port = process.env.PORT || 5000;
 
 
-
 app.set('superSecret', 'beenthere');
 
 //configure the app to use body parsers
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -78,25 +76,10 @@ var messagesRouter = require("./routes/messagesRoutes")(Messages);
 //});
 
 
-
-
-
-
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     //console.log('req.body: ' + req.body)
     //console.log('Loading x-access-token -- begin.');
-    if((req.path === "/api/person/search") && req.method === "POST"){
-        next();
-    }
-    else if((req.path === "/api/room/save") && req.method === "POST"){
-        next();
-    }
-    else if((req.path === "/api/book/finish") && req.method === "POST"){
-
-        next();
-    }
-    else if((req.path === "/api/message/search") && req.method === "GET"){
-
+    if (((req.path === "/api/person")||(req.path === "/api/person/search")) && req.method === "POST") {
         next();
     }
     else {
@@ -144,9 +127,6 @@ app.use(function(req, res, next) {
 });
 
 
-
-
-
 app.use('/api/users', userRouter);
 app.use('/api/usertracks', usertrackRouter);
 app.use('/api/book', bookRouter);
@@ -162,21 +142,13 @@ app.use('/api/message', messageRouter);
 app.use('/api/messages', messagesRouter);
 
 
-
-
-
 //simple startit forward route
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
     res.send('BTS - Server v0.2 ');
 });
 
 
-
-
-
-
-
-app.listen(port,function(){
+app.listen(port, function () {
     console.log('-----App running on port: ' + port);
 });
 
